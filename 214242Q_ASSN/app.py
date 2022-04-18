@@ -6,6 +6,9 @@ while switch == True:
     picker = input("Enter a function number: ")
     if picker == "1":
         print("|   Package Name   |   Customer Name   |   No. of Pax   |   Package Cost per Pax   |")
+        for i in range():
+            print(package, customerName, noOfPax, cost)
+
     elif picker == "2":
         pass
     elif picker == "3":
