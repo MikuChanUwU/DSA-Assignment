@@ -28,5 +28,3 @@ class Package:
 
     def setCost(self, cost):
         self.__cost = cost
-
-     
