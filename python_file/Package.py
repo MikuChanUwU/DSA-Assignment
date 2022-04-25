@@ -1,6 +1,5 @@
 class Package:
-    def __init__(self,packageID, packageName, customerName, pax, cost):
-        self.__packageID = packageID
+    def __init__(self, packageName, customerName, pax, cost):
         self.__packageName = packageName
         self.__customerName = customerName
         self.__pax = pax
@@ -17,12 +16,6 @@ class Package:
     
     def getCost(self):
         return self.__cost
-
-    def getPackageID(self):
-        return self.__packageID
-
-    def setGetPackageID(self, packageID):
-        self.__packageID = packageID
     
     def setPackageName(self, packageName):
         self.__packageName = packageName
