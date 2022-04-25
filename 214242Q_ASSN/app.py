@@ -1,5 +1,4 @@
-from python_class import Package
-from Data import Data
+from python_class.Package import Package
 import shelve
 
 switch = True
@@ -9,8 +8,17 @@ while switch:
     picker = input("Enter a function number: ")
     if picker == "1":
         print("|   Package Name   |   Customer Name   |   No. of Pax   |   Package Cost per Pax   |")
-        for i in range():
-            pack = Package.Package(package, customerName, noOfPax, cost)
+        for packages in ():
+            try:
+                packageDict = {}
+                db = shelve.open("package", "r")
+                packageDict = db["Package"]
+            except:
+                print("Unable to open up package shelve")
+                db.close()
+                break
+            package = packageDict[]
+            pack = Package(packageID, packageName, customerName, noOfPax, cost)
             print(pack)
 
     elif picker == "2":
