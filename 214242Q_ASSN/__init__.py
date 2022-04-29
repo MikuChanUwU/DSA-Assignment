@@ -32,10 +32,10 @@ def insertionSort(packageList):
     for i in range(1, len(packageList)):
         key = packageList[i]
         j = i-1
-        while j >= 0 and key < packageList[j]["Package Name"] :
-                packageList[j + 1]["Package Name"] = packageList[j]["Package Name"]
+        while j >= 0 and key < packageList[j]["Cost"] :
+                packageList[j + 1]["Cost"] = packageList[j]["Cost"]
                 j -= 1
-        packageList[j + 1]["Package Name"] = key
+        packageList[j + 1]["Cost"] = key
 
 def bubbleSort(packageList):
     n = len(packageList)
