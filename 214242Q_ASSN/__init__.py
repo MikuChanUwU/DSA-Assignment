@@ -1,3 +1,7 @@
+#Royston Loo Yi Shin
+#214242Q
+#SF1202
+
 import sys
 
 switch = True
@@ -43,6 +47,35 @@ def bubbleSort(packageList):
         for j in range(0, n-i-1):
             if packageList[j]['Customer Name'] > packageList[j + 1]['Customer Name']:
                 packageList[j], packageList[j+1] = packageList[j+1], packageList[j]
+
+def linearSearch(packageList, n, x):
+ 
+    for i in range(0, n):
+        if (packageList[i] == x):
+            return i
+    return -1
+
+def binarySearch(arr, l, r, x):
+ 
+    while l <= r:
+ 
+        mid = l + (r - l) // 2
+ 
+        # Check if x is present at mid
+        if arr[mid] == x:
+            return mid
+ 
+        # If x is greater, ignore left half
+        elif arr[mid] < x:
+            l = mid + 1
+ 
+        # If x is smaller, ignore right half
+        else:
+            r = mid - 1
+ 
+    # If we reach here, then the element
+    # was not present
+    return -1
 
 while switch:
     print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 0. Exit Application")
