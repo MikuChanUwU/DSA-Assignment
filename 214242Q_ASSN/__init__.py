@@ -1,9 +1,11 @@
+import sys
+
 switch = True
 
 packageList =[{"Customer Name": "liam     ","Package Name": "Package 4 ", "Pax": 60 , "Cost": 800},
             {"Customer Name": "noah     ","Package Name": "Package 5 ", "Pax": 70 , "Cost": 900},
             {"Customer Name": "oliver   ","Package Name": "Package 6 ", "Pax": 80 , "Cost": 1000},
-            {"Customer Name": "elijah   ","1Package Name": "Package 7 ", "Pax": 90 , "Cost": 100},
+            {"Customer Name": "elijah   ","Package Name": "Package 7 ", "Pax": 90 , "Cost": 100},
             {"Customer Name": "william  ","Package Name": "Package 8 ", "Pax": 100, "Cost": 200},
             {"Customer Name": "james    ","Package Name": "Package 9 ", "Pax": 10 , "Cost": 300},
             {"Customer Name": "benjamin ","Package Name": "Package 10", "Pax": 20 , "Cost": 400},
@@ -17,7 +19,14 @@ def display():
     for package in packageList:
         print(*package.values(), sep="      ")
     print("=========================================================")
-    
+
+def selectionSort(packageList):
+    for i in range(len(packageList)):
+        min_idx = i
+        for j in range(i+1, len(packageList)):
+            if packageList[min_idx]["Package Name"] > packageList[j]["Package Name"]:
+                min_idx = j    
+        packageList[i], packageList[min_idx] = packageList[min_idx], packageList[i]    
 
 def insertionSort(packageList):
     for i in range(1, len(packageList)):
@@ -44,7 +53,8 @@ while switch:
         bubbleSort(packageList)
         display()
     elif picker == "3":
-        pass
+        selectionSort(packageList)
+        display()
     elif picker == "4":
         insertionSort(packageList)
         display()
