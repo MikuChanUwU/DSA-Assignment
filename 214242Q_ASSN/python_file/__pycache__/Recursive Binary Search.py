@@ -4,7 +4,6 @@
  
  
 def binarySearch(arr, l, r, x):
- 
     # Check base case
     if r >= l:
  
