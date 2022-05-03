@@ -5,17 +5,18 @@
 import sys
 
 switch = True
+switch2 = True
 
-packageList =[{"Customer Name": "liam     ","Package Name": "Package 4 ", "Pax": 60 , "Cost": 800},
-            {"Customer Name": "noah     ","Package Name": "Package 5 ", "Pax": 70 , "Cost": 900},
-            {"Customer Name": "oliver   ","Package Name": "Package 6 ", "Pax": 80 , "Cost": 1000},
-            {"Customer Name": "elijah   ","Package Name": "Package 7 ", "Pax": 90 , "Cost": 100},
-            {"Customer Name": "william  ","Package Name": "Package 8 ", "Pax": 100, "Cost": 200},
-            {"Customer Name": "james    ","Package Name": "Package 9 ", "Pax": 10 , "Cost": 300},
-            {"Customer Name": "benjamin ","Package Name": "Package 10", "Pax": 20 , "Cost": 400},
-            {"Customer Name": "lucas    ","Package Name": "Package 1 ", "Pax": 30 , "Cost": 500},
-            {"Customer Name": "henry    ","Package Name": "Package 2 ", "Pax": 40 , "Cost": 600},
-            {"Customer Name": "alexander","Package Name": "Package 3 ", "Pax": 50 , "Cost": 700}]
+packageList =[{"Customer Name": "liam","package Name": "Package 4 ", "Pax": 60 , "Cost": 800},
+            {"Customer Name": "noah","package Name": "Package 5 ", "Pax": 70 , "Cost": 900},
+            {"Customer Name": "oliver","package Name": "Package 6 ", "Pax": 80 , "Cost": 1000},
+            {"Customer Name": "elijah","package Name": "Package 7 ", "Pax": 90 , "Cost": 100},
+            {"Customer Name": "william","package Name": "Package 8 ", "Pax": 100, "Cost": 200},
+            {"Customer Name": "james","package Name": "Package 9 ", "Pax": 10 , "Cost": 300},
+            {"Customer Name": "benjamin","package Name": "Package 10", "Pax": 20 , "Cost": 400},
+            {"Customer Name": "lucas","package Name": "Package 1 ", "Pax": 30 , "Cost": 500},
+            {"Customer Name": "henry","package Name": "Package 2 ", "Pax": 40 , "Cost": 600},
+            {"Customer Name": "alexander","package Name": "Package 3 ", "Pax": 50 , "Cost": 700}]
 
 def display():
     print("Customer Name  Package Name   Pax   Package Cost per Pax")
@@ -34,7 +35,7 @@ def selectionSort(packageList):
 
 def insertionSort(packageList):
     for i in range(1, len(packageList)):
-        key = packageList[i]
+        key = packageList[i]["Cost"]
         j = i-1
         while j >= 0 and key < packageList[j]["Cost"] :
                 packageList[j + 1]["Cost"] = packageList[j]["Cost"]
@@ -51,7 +52,7 @@ def bubbleSort(packageList):
 def linearSearch(packageList, n, x):
  
     for i in range(0, n):
-        if (packageList[i] == x):
+        if (packageList[i]["Customer Name"] == x):
             return i
     return -1
 
@@ -92,7 +93,46 @@ while switch:
         insertionSort(packageList)
         display()
     elif picker == "5":
-        pass
+        search = input("Enter Customer Name: ").lower()
+        results = linearSearch(packageList, len(packageList), search)
+        if results == -1:
+            print("Customer Name not found")
+        else:
+            print("Customer Name  Package Name   Pax   Package Cost per Pax")
+            print("=========================================================")
+            print(*packageList[results].values(), sep="      ")
+            print("=========================================================")
+            update = input("Do you want to update the record? (Y/N): ").lower()
+            while True:
+                if update == "y":
+                    packageList[results]["Customer Name"] = input("Enter Customer Name: ").lower()
+                    packageList[results]["Package Name"] = input("Enter Package Name: ").lower()
+                    while True:
+                        try:
+                            packageList[results]["Pax"] = int(input("Enter Pax: "))
+                            if packageList[results]["Pax"] <= 0:
+                                print("Pax must be greater than 0")
+                            else:
+                                break
+                        except ValueError:
+                            print("Please enter a number")
+                    while True:
+                        try:
+                            packageList[results]["Cost"] = int(input("Enter Cost: "))
+                            if packageList[results]["Cost"] <= 0:
+                                print("Cost must be greater than 0")
+                            else:
+                                break
+                        except ValueError:
+                            print("Please enter a number")
+                    print("Record updated")
+                    break
+                elif update == "n":
+                    print("Record not updated")
+                    break
+                else:
+                    print("Invalid input, please try again. Y/N?")
+
     elif picker == "6":
         pass
     elif picker == "7":
