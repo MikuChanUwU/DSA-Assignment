@@ -19,6 +19,7 @@ packageList =[{"Customer Name": "liam","Package Name": "package 4", "Pax":60, "C
             {"Customer Name": "alexander","Package Name": "package 3", "Pax":50, "Cost": 700}]
 
 def display():
+    print("=========================================================")
     print("Customer Name  Package Name   Pax   Package Cost per Pax")
     print("=========================================================")
     for package in packageList:
@@ -58,25 +59,14 @@ def linearSearch(packageList, n, x):
 
 def binarySearch(packageList, l, r, x):
     while l <= r:
- 
         mid = l + (r - l) // 2
-
         print(packageList[mid]["Package Name"])
- 
-        # Check if x is present at mid
         if packageList[mid]["Package Name"] == x:
             return mid
- 
-        # If x is greater, ignore left half
         elif packageList[mid]["Package Name"] < x:
             l = mid + 1
- 
-        # If x is smaller, ignore right half
         else:
             r = mid - 1
- 
-    # If we reach here, then the element
-    # was not present
     return -1
 
 while switch:
@@ -99,6 +89,7 @@ while switch:
         if results == -1:
             print("Customer Name not found")
         else:
+            print("=========================================================")
             print("Customer Name  Package Name   Pax   Package Cost per Pax")
             print("=========================================================")
             print(*packageList[results].values(), sep="      ")
@@ -140,6 +131,7 @@ while switch:
         if results == -1:
             print("Package Name not found")
         else:
+            print("=========================================================")
             print("Customer Name  Package Name   Pax   Package Cost per Pax")
             print("=========================================================")
             print(*packageList[results].values(), sep="      ")
@@ -175,7 +167,30 @@ while switch:
                 else:
                     print("Invalid input, please try again. Y/N?")
     elif picker == "7":
-        pass
+        while True:
+            try:
+                range1 = int(input("Enter minimum cost: "))
+                if range1 <= 0:
+                    print("Number must be greater than 0")
+                else:
+                    break
+            except ValueError:
+                print("Please enter a number")
+        while True:
+            try:
+                range2 = int(input("Enter maximum cost: "))
+                if range2 <= 0:
+                    print("Number must be greater than 0")
+                else:
+                    break
+            except ValueError:
+                print("Please enter a number")
+        print("Customer Name  Package Name   Pax   Package Cost per Pax")
+        print("=========================================================")
+        for i in range(len(packageList)):
+            if packageList[i]["Cost"] >= range1 and packageList[i]["Cost"] <= range2:
+                print(*packageList[i].values(), sep="      ")
+        print("=========================================================")
     elif picker == "8":
         pass
     elif picker == "9":
