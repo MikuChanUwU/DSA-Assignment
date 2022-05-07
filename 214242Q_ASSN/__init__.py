@@ -7,16 +7,16 @@ import sys
 switch = True
 switch2 = True
 
-packageList =[{"Customer Name": "liam","Package Name": "package 4", "Pax":60, "Cost": 800},
-            {"Customer Name": "noah","Package Name": "package 5", "Pax":70, "Cost": 900},
-            {"Customer Name": "oliver","Package Name": "package 6", "Pax":80, "Cost": 1000},
-            {"Customer Name": "elijah","Package Name": "package 7", "Pax":90, "Cost": 100},
-            {"Customer Name": "william","Package Name": "package 8", "Pax":100, "Cost": 200},
-            {"Customer Name": "james","Package Name": "package 9", "Pax":10, "Cost": 300},
-            {"Customer Name": "benjamin","Package Name": "package 10", "Pax":20, "Cost": 400},
-            {"Customer Name": "lucas","Package Name": "package 1", "Pax":30, "Cost": 500},
-            {"Customer Name": "henry","Package Name": "package 2", "Pax":40, "Cost": 600},
-            {"Customer Name": "alexander","Package Name": "package 3", "Pax":50, "Cost": 700}]
+packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cost": 800},
+            {"Customer Name": "noah","Package Name": "desktop", "Pax":70, "Cost": 900},
+            {"Customer Name": "oliver","Package Name": "telephone", "Pax":80, "Cost": 1000},
+            {"Customer Name": "elijah","Package Name": "playstation five", "Pax":90, "Cost": 100},
+            {"Customer Name": "william","Package Name": "drum", "Pax":100, "Cost": 200},
+            {"Customer Name": "james","Package Name": "microphone", "Pax":10, "Cost": 300},
+            {"Customer Name": "benjamin","Package Name": "phone", "Pax":20, "Cost": 400},
+            {"Customer Name": "lucas","Package Name": "laptop", "Pax":30, "Cost": 500},
+            {"Customer Name": "henry","Package Name": "television", "Pax":40, "Cost": 600},
+            {"Customer Name": "alexander","Package Name": "speaker", "Pax":50, "Cost": 700}]
 
 def display():
     print("=========================================================")
@@ -57,10 +57,13 @@ def linearSearch(packageList, n, x):
             return i
     return -1
 
-def binarySearch(packageList, l, r, x):
+def binarySearch(packageList, x):
+    l = 0
+    r = len(packageList)-1
     while l <= r:
+        print(l)
+        print(r)
         mid = l + (r - l) // 2
-        print(packageList[mid]["Package Name"])
         if packageList[mid]["Package Name"] == x:
             return mid
         elif packageList[mid]["Package Name"] < x:
@@ -70,7 +73,7 @@ def binarySearch(packageList, l, r, x):
     return -1
 
 while switch:
-    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. To be Continued \n 9. To be Continued \n 0. Exit Application")
+    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Search record by Package Name using Tenary Search \n 0. Exit Application")
     picker = input("Enter a function number: ")
     if picker == "1":
         display()
@@ -127,7 +130,7 @@ while switch:
 
     elif picker == "6":
         search = input("Enter Package Name: ").lower()
-        results = binarySearch(packageList, 0, len(packageList)-1, search)
+        results = binarySearch(packageList, search)
         if results == -1:
             print("Package Name not found")
         else:
