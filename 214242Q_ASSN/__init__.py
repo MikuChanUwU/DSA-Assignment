@@ -82,18 +82,19 @@ def linearSearch(packageList, n, x):
     return -1
 
 def binarySearch(packageList, x):
-    l = 0
-    r = len(packageList)-1
-    while l <= r:
-        print(l)
-        print(r)
-        mid = l + (r - l) // 2
-        if packageList[mid]["Package Name"] == x:
+    packageListCopy = packageList.copy()
+    selectionSort(packageListCopy)
+    low = 0
+    high = len(packageListCopy)-1
+    while low <= high:
+        mid = (low + high) // 2
+        print(low , mid , high)
+        if packageListCopy[mid]["Package Name"] == x:
             return mid
-        elif packageList[mid]["Package Name"] < x:
-            l = mid + 1
+        elif packageListCopy[mid]["Package Name"] < x:
+            low = mid + 1
         else:
-            r = mid - 1
+            high = mid - 1
     return -1
 
 def heapify(packageList, n, i):
@@ -131,7 +132,7 @@ def heapSort(packageList):
         heapify(packageList, i, 0)
 
 while switch:
-    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Sort record by Cost using Bucket Sort \n 0. Exit Application")
+    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Sort record by Package Cost using Bucket Sort \n 0. Exit Application")
     picker = input("Enter a function number: ")
     if picker == "1":
         display()
