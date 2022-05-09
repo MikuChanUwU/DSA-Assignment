@@ -43,6 +43,30 @@ def insertionSort(packageList):
                 j -= 1
         packageList[j + 1]["Cost"] = key
 
+def bucketSort(packageList):
+    bucket = []
+
+    # Create empty buckets
+    for i in range(len(packageList)):
+        bucket.append([])
+
+    # Insert elements into their respective buckets
+    for j in packageList:
+        index_b = int(10 * j)
+        bucket[index_b].append(j)
+
+    # Sort the elements of each bucket
+    for i in range(len(packageList)):
+        bucket[i] = sorted(bucket[i])
+
+    # Get the sorted elements
+    k = 0
+    for i in range(len(packageList)):
+        for j in range(len(bucket[i])):
+            packageList[k] = bucket[i][j]
+            k += 1
+    return packageList
+
 def bubbleSort(packageList):
     n = len(packageList)
     for i in range(n):
@@ -72,8 +96,42 @@ def binarySearch(packageList, x):
             r = mid - 1
     return -1
 
+def heapify(packageList, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+ 
+    # See if left child of root exists and is
+    # greater than root
+    if l < n and packageList[largest] < packageList[l]:
+        largest = l
+ 
+    # See if right child of root exists and is
+    # greater than root
+    if r < n and packageList[largest] < packageList[r]:
+        largest = r
+ 
+    # Change root, if needed
+    if largest != i:
+        packageList[i], packageList[largest] = packageList[largest], packageList[i]  # swap
+ 
+        # Heapify the root.
+        heapify(packageList, n, largest)
+
+def heapSort(packageList):
+    n = len(packageList)
+ 
+    # Build a maxheap.
+    for i in range(n//2 - 1, -1, -1):
+        heapify(packageList, n, i)
+ 
+    # One by one extract elements
+    for i in range(n-1, 0, -1):
+        packageList[i], packageList[0] = packageList[0], packageList[i]  # swap
+        heapify(packageList, i, 0)
+
 while switch:
-    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Search record by Package Name using Tenary Search \n 0. Exit Application")
+    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Sort record by Cost using Bucket Sort \n 0. Exit Application")
     picker = input("Enter a function number: ")
     if picker == "1":
         display()
@@ -195,9 +253,11 @@ while switch:
                 print(*packageList[i].values(), sep="      ")
         print("=========================================================")
     elif picker == "8":
-        pass
+        heapSort(packageList)
+        display()
     elif picker == "9":
-        pass
+        bucketSort(packageList)
+        display()
     elif picker == "0":
         print("Goodbye.")
         switch = False
