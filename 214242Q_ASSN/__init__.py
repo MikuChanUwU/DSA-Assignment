@@ -52,7 +52,7 @@ def bucketSort(packageList):
 
     # Insert elements into their respective buckets
     for j in packageList:
-        index_b = int(10 * j)
+        index_b = int(10 * j["Cost"])
         bucket[index_b].append(j)
 
     # Sort the elements of each bucket
@@ -104,12 +104,12 @@ def heapify(packageList, n, i):
  
     # See if left child of root exists and is
     # greater than root
-    if l < n and packageList[largest] < packageList[l]:
+    if l < n and packageList[largest]["Customer Name"] < packageList[l]["Customer Name"]:
         largest = l
  
     # See if right child of root exists and is
     # greater than root
-    if r < n and packageList[largest] < packageList[r]:
+    if r < n and packageList[largest]["Customer Name"] < packageList[r]["Customer Name"]:
         largest = r
  
     # Change root, if needed
@@ -169,7 +169,7 @@ while switch:
                             else:
                                 break
                         except ValueError:
-                            print("Please enter a number")
+                            print("Please enter a number & no decimals")
                     while True:
                         try:
                             packageList[results]["Cost"] = int(input("Enter Cost: "))
@@ -178,7 +178,7 @@ while switch:
                             else:
                                 break
                         except ValueError:
-                            print("Please enter a number")
+                            print("Please enter a number & no decimals")
                     print("Record updated")
                     break
                 elif update == "n":
@@ -211,7 +211,7 @@ while switch:
                             else:
                                 break
                         except ValueError:
-                            print("Please enter a number")
+                            print("Please enter a number & no decimals")
                     while True:
                         try:
                             packageList[results]["Cost"] = int(input("Enter Cost: "))
@@ -220,7 +220,7 @@ while switch:
                             else:
                                 break
                         except ValueError:
-                            print("Please enter a number")
+                            print("Please enter a number & no decimals")
                     print("Record updated")
                     break
                 elif update == "n":
@@ -237,7 +237,7 @@ while switch:
                 else:
                     break
             except ValueError:
-                print("Please enter a number")
+                print("Please enter a number & no decimals")
         while True:
             try:
                 range2 = int(input("Enter maximum cost: "))
@@ -246,7 +246,7 @@ while switch:
                 else:
                     break
             except ValueError:
-                print("Please enter a number")
+                print("Please enter a number & no decimals")
         print("Customer Name  Package Name   Pax   Package Cost per Pax")
         print("=========================================================")
         for i in range(len(packageList)):
