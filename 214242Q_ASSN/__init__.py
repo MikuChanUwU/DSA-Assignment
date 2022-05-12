@@ -53,6 +53,8 @@ def bucketSort(packageList):
     # Insert elements into their respective buckets
     for j in packageList:
         index_b = int(10 * j["Cost"])
+        print(index_b)
+        print(bucket)
         bucket[index_b].append(j)
 
     # Sort the elements of each bucket
@@ -82,16 +84,15 @@ def linearSearch(packageList, n, x):
     return -1
 
 def binarySearch(packageList, x):
-    packageListCopy = packageList.copy()
-    selectionSort(packageListCopy)
+    selectionSort(packageList)
     low = 0
-    high = len(packageListCopy)-1
+    high = len(packageList)-1
     while low <= high:
         mid = (low + high) // 2
         print(low , mid , high)
-        if packageListCopy[mid]["Package Name"] == x:
+        if packageList[mid]["Package Name"] == x:
             return mid
-        elif packageListCopy[mid]["Package Name"] < x:
+        elif packageList[mid]["Package Name"] < x:
             low = mid + 1
         else:
             high = mid - 1
@@ -132,7 +133,7 @@ def heapSort(packageList):
         heapify(packageList, i, 0)
 
 while switch:
-    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Sort record by Package Cost using Bucket Sort \n 0. Exit Application")
+    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Sort record by Package Cost using Bucket Sort \n 10. Add new record \n 11. Delete a specific record \n 0. Exit Application")
     picker = input("Enter a function number: ")
     if picker == "1":
         display()
@@ -156,11 +157,29 @@ while switch:
             print("=========================================================")
             print(*packageList[results].values(), sep="      ")
             print("=========================================================")
-            update = input("Do you want to update the record? (Y/N): ").lower()
             while True:
+                update = input("Do you want to update the record? (Y/N): ").lower()
                 if update == "y":
-                    packageList[results]["Customer Name"] = input("Enter Customer Name: ").lower()
-                    packageList[results]["Package Name"] = input("Enter Package Name: ").lower()
+                    while True:
+                        packageList[results]["Customer Name"] = input("Enter Customer Name: ").lower()
+                        custExist = False
+                        for package in packageList:
+                            if package["Customer Name"] == packageList[results]["Customer Name"]:
+                                custExist = True
+                                print("Customer Name already exists")
+                                break
+                        if custExist == False:
+                            break
+                    while True:
+                        packageList[results]["Package Name"] = input("Enter Package Name: ").lower()
+                        packageExist = False
+                        for package in packageList:
+                            if package["Package Name"] == packageList[results]["Package Name"]:
+                                packageExist = True
+                                print("Package Name already exists")
+                                break
+                        if packageExist == False:
+                            break
                     while True:
                         try:
                             packageList[results]["Pax"] = int(input("Enter Pax: "))
@@ -198,11 +217,29 @@ while switch:
             print("=========================================================")
             print(*packageList[results].values(), sep="      ")
             print("=========================================================")
-            update = input("Do you want to update the record? (Y/N): ").lower()
             while True:
+                update = input("Do you want to update the record? (Y/N): ").lower()
                 if update == "y":
-                    packageList[results]["Customer Name"] = input("Enter Customer Name: ").lower()
-                    packageList[results]["Package Name"] = input("Enter Package Name: ").lower()
+                    while True:
+                        packageList[results]["Customer Name"] = input("Enter Customer Name: ").lower()
+                        custExist == False
+                        for i in range(len(packageList)):
+                            if packageList[i]["Customer Name"] == packageList[results]["Customer Name"]:
+                                custExist = True
+                                print("Customer Name already exists")
+                                break
+                        if custExist == False:
+                            break
+                    while True:    
+                        packageList[results]["Package Name"] = input("Enter Package Name: ").lower()
+                        packExist == False
+                        for i in range(len(packageList)):
+                            if packageList[i]["Package Name"] == packageList[results]["Package Name"]:
+                                packExist = True
+                                print("Package Name already exists")
+                                break
+                        if packExist == False:
+                            break
                     while True:
                         try:
                             packageList[results]["Pax"] = int(input("Enter Pax: "))
@@ -259,6 +296,66 @@ while switch:
     elif picker == "9":
         bucketSort(packageList)
         display()
+    elif picker == "10":
+        while True:
+            newCustomerName = input("Enter New Customer Name: ").lower()
+            custExist = False
+            for i in range(len(packageList)):
+                if newCustomerName == packageList[i]["Customer Name"]:
+                    print("Customer Name already exists")
+                    custExist = True
+                    break
+            if custExist == False: 
+                break
+        while True:
+            newPackageName = input("Enter New Package Name: ").lower()
+            packExist = False
+            for i in range(len(packageList)):
+                if newPackageName == packageList[i]["Package Name"]:
+                    print("Package Name already exists")
+                    packExist = True
+                    break
+            if packExist == False:
+                break
+        while True:
+            try:
+                newPax = int(input("Enter New Pax: "))
+                if newPax <= 0:
+                    print("Pax must be greater than 0")
+                else:
+                    break
+            except ValueError:
+                print("Please enter a number & no decimals")
+        while True:
+            try:
+                newCost = int(input("Enter New Cost: "))
+                if newCost <= 0:
+                    print("Cost must be greater than 0")
+                else:
+                    break
+            except ValueError:
+                print("Please enter a number & no decimals")
+        packageList.append({"Customer Name": newCustomerName, "Package Name": newPackageName, "Pax": newPax, "Cost": newCost})
+        print("Record added")
+    elif picker == "11":
+        display()
+        search = input("Enter Customer Name: ").lower()
+        results = linearSearch(packageList, len(packageList), search)
+        if results == -1:
+            print("Customer Name not found")
+        else:
+            print("Are you sure? (Y/N)")
+            while True:
+                delete = input("Enter your choice: ").lower()
+                if delete == "y":
+                    del packageList[results]
+                    print("Record deleted")
+                    break
+                elif delete == "n":
+                    print("Record not deleted")
+                    break
+                else:
+                    print("Invalid input, please try again. Y/N?")
     elif picker == "0":
         print("Goodbye.")
         switch = False
