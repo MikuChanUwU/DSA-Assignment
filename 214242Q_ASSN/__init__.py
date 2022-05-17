@@ -2,8 +2,6 @@
 #214242Q
 #SF1202
 
-import sys
-
 switch = True
 switch2 = True
 
@@ -17,6 +15,63 @@ packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cos
             {"Customer Name": "lucas","Package Name": "laptop", "Pax":30, "Cost": 500},
             {"Customer Name": "henry","Package Name": "television", "Pax":40, "Cost": 600},
             {"Customer Name": "alexander","Package Name": "speaker", "Pax":50, "Cost": 700}]
+
+def updateDisplay(results):
+    print("=========================================================")
+    print("Customer Name  Package Name   Pax   Package Cost per Pax")
+    print("=========================================================")
+    print(*packageList[results].values(), sep="      ")
+    print("=========================================================")
+    while True:
+        update = input("Do you want to update the record? (Y/N): ").lower()
+        if update == "y":
+            while True:
+                newCustomerName = input("Enter Customer Name: ").lower()
+                custExist = False
+                for i in range(len(packageList)):
+                    if packageList[i]["Customer Name"] == newCustomerName:
+                        custExist = True
+                        print("Customer Name already exists")
+                        break
+                if custExist == False:
+                    packageList[results]["Customer Name"] = newCustomerName
+                    break
+            while True:    
+                newPackageName = input("Enter Package Name: ").lower()
+                packExist = False
+                for i in range(len(packageList)):
+                    if packageList[i]["Package Name"] == newPackageName:
+                        packExist = True
+                        print("Package Name already exists")
+                        break
+                if packExist == False:
+                    packageList[results]["Package Name"] = newPackageName
+                    break
+            while True:
+                try:
+                    packageList[results]["Pax"] = int(input("Enter Pax: "))
+                    if packageList[results]["Pax"] <= 0:
+                        print("Pax must be greater than 0")
+                    else:
+                        break
+                except ValueError:
+                    print("Please enter a number & no decimals")
+            while True:
+                try:
+                    packageList[results]["Cost"] = int(input("Enter Cost: "))
+                    if packageList[results]["Cost"] <= 0:
+                        print("Cost must be greater than 0")
+                    else:
+                        break
+                except ValueError:
+                    print("Please enter a number & no decimals")
+            print("Record updated")
+            break
+        elif update == "n":
+            print("Record not updated")
+            break
+        else:
+            print("Invalid input, please try again. Y/N?")
 
 def display():
     print("=========================================================")
@@ -152,119 +207,14 @@ while switch:
         if results == -1:
             print("Customer Name not found")
         else:
-            print("=========================================================")
-            print("Customer Name  Package Name   Pax   Package Cost per Pax")
-            print("=========================================================")
-            print(*packageList[results].values(), sep="      ")
-            print("=========================================================")
-            while True:
-                update = input("Do you want to update the record? (Y/N): ").lower()
-                if update == "y":
-                    while True:
-                        packageList[results]["Customer Name"] = input("Enter Customer Name: ").lower()
-                        custExist = False
-                        for package in packageList:
-                            if package["Customer Name"] == packageList[results]["Customer Name"]:
-                                custExist = True
-                                print("Customer Name already exists")
-                                break
-                        if custExist == False:
-                            break
-                    while True:
-                        packageList[results]["Package Name"] = input("Enter Package Name: ").lower()
-                        packageExist = False
-                        for package in packageList:
-                            if package["Package Name"] == packageList[results]["Package Name"]:
-                                packageExist = True
-                                print("Package Name already exists")
-                                break
-                        if packageExist == False:
-                            break
-                    while True:
-                        try:
-                            packageList[results]["Pax"] = int(input("Enter Pax: "))
-                            if packageList[results]["Pax"] <= 0:
-                                print("Pax must be greater than 0")
-                            else:
-                                break
-                        except ValueError:
-                            print("Please enter a number & no decimals")
-                    while True:
-                        try:
-                            packageList[results]["Cost"] = int(input("Enter Cost: "))
-                            if packageList[results]["Cost"] <= 0:
-                                print("Cost must be greater than 0")
-                            else:
-                                break
-                        except ValueError:
-                            print("Please enter a number & no decimals")
-                    print("Record updated")
-                    break
-                elif update == "n":
-                    print("Record not updated")
-                    break
-                else:
-                    print("Invalid input, please try again. Y/N?")
-
+            updateDisplay(results)
     elif picker == "6":
         search = input("Enter Package Name: ").lower()
         results = binarySearch(packageList, search)
         if results == -1:
             print("Package Name not found")
         else:
-            print("=========================================================")
-            print("Customer Name  Package Name   Pax   Package Cost per Pax")
-            print("=========================================================")
-            print(*packageList[results].values(), sep="      ")
-            print("=========================================================")
-            while True:
-                update = input("Do you want to update the record? (Y/N): ").lower()
-                if update == "y":
-                    while True:
-                        packageList[results]["Customer Name"] = input("Enter Customer Name: ").lower()
-                        custExist == False
-                        for i in range(len(packageList)):
-                            if packageList[i]["Customer Name"] == packageList[results]["Customer Name"]:
-                                custExist = True
-                                print("Customer Name already exists")
-                                break
-                        if custExist == False:
-                            break
-                    while True:    
-                        packageList[results]["Package Name"] = input("Enter Package Name: ").lower()
-                        packExist == False
-                        for i in range(len(packageList)):
-                            if packageList[i]["Package Name"] == packageList[results]["Package Name"]:
-                                packExist = True
-                                print("Package Name already exists")
-                                break
-                        if packExist == False:
-                            break
-                    while True:
-                        try:
-                            packageList[results]["Pax"] = int(input("Enter Pax: "))
-                            if packageList[results]["Pax"] <= 0:
-                                print("Pax must be greater than 0")
-                            else:
-                                break
-                        except ValueError:
-                            print("Please enter a number & no decimals")
-                    while True:
-                        try:
-                            packageList[results]["Cost"] = int(input("Enter Cost: "))
-                            if packageList[results]["Cost"] <= 0:
-                                print("Cost must be greater than 0")
-                            else:
-                                break
-                        except ValueError:
-                            print("Please enter a number & no decimals")
-                    print("Record updated")
-                    break
-                elif update == "n":
-                    print("Record not updated")
-                    break
-                else:
-                    print("Invalid input, please try again. Y/N?")
+            updateDisplay(results)
     elif picker == "7":
         while True:
             try:
