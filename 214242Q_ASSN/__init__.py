@@ -1,9 +1,15 @@
 #Royston Loo Yi Shin
 #214242Q
 #SF1202
+import random
 
 switch = True
 switch2 = True
+
+
+#################################################################################################################################
+#Data starts here
+
 
 packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cost": 800},
             {"Customer Name": "noah","Package Name": "desktop", "Pax":70, "Cost": 900},
@@ -15,6 +21,12 @@ packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cos
             {"Customer Name": "lucas","Package Name": "laptop", "Pax":30, "Cost": 500},
             {"Customer Name": "henry","Package Name": "television", "Pax":40, "Cost": 600},
             {"Customer Name": "alexander","Package Name": "speaker", "Pax":50, "Cost": 700}]
+
+
+#Data ends here
+#################################################################################################################################
+#Function for algo starts here
+
 
 def updateDisplay(results):
     print("=========================================================")
@@ -187,19 +199,37 @@ def heapSort(packageList):
         packageList[i], packageList[0] = packageList[0], packageList[i]  # swap
         heapify(packageList, i, 0)
 
-def countingSort(packageList):
-    count = [0] * (max(packageList) + 1)
+def countSort(packageList):
+    # The output character array that will have sorted arr
+    output = [0 for i in range(len(packageList))]
  
+    # Create a count array to store count of individual
+    # characters and initialize count array as 0
+    count = [0 for i in range(256)]
+ 
+    # For storing the resulting answer since the
+    # string is immutable
+    ans = ["" for _ in packageList]
+ 
+    # Store count of each character
     for i in packageList:
-        count[i] += 1
+        count[ord(i)] += 1
  
-    i = 0
-    for j in range(len(count)):
-        for k in range(count[j]):
-            packageList[i] = j
-            i += 1
+    # Change count[i] so that count[i] now contains actual
+    # position of this character in output array
+    for i in range(256):
+        count[i] += count[i-1]
  
-    return packageList
+    # Build the output character array
+    for i in range(len(packageList)):
+        output[count[ord(packageList[i])]-1] = packageList[i]
+        count[ord(packageList[i])] -= 1
+ 
+    # Copy the output array to arr, so that arr now
+    # contains sorted characters
+    for i in range(len(packageList)):
+        ans[i] = output[i]
+    return ans
 
 def radixSort(packageList):
     bucket = [[] for i in range(10)]
@@ -228,9 +258,50 @@ def shellSort(packageList):
             packageList[j] = temp
         gap //= 2
 
+def bogoSort(packageList):
+    attempts = 0
+    while not isSorted(packageList):
+        shuffle(packageList)
+        attempts += 1
+        print("\rAttempts: " + str(attempts), end="")
+    print(f"\nSorted after {attempts} attempts")
+    
+def isSorted(packageList):
+    for i in range(len(packageList)-1):
+        if packageList[i]["Customer Name"] > packageList[i+1]["Customer Name"]:
+            return False
+            
+    return True
+
+def shuffle(packageList):
+    for i in range(len(packageList)):
+        j = random.randrange(len(packageList))
+        packageList[i], packageList[j] = packageList[j], packageList[i]
+        
+
+#Function for algo ends here
+########################################################################################################################################
+#Console Function starts here
+
+
 while switch:
-    print(" 1. Display all records \n 2. Sort record by Customer Name using Bubble sort \n 3. Sort record by Package Name using Selection sort \n 4. Sort record by Package Cost using Insertion sort \n 5. Search record by Customer Name using Linear Search and update record \n 6. Search record by Package Name using Binary Search and update record \n 7. List records range from $X to $Y. e.g $100-200 \n 8. Sort record by Customer Name using Heapsort \n 9. Sort record by Package Cost using Bucket sort \n 10. Sort record by Package Pax using Counting sort \n 11. Sort record by Package Cost using Radix sort \n 12. Sort record by Customer Name using Shell sort \n 13. Add new record \n 14. Delete a specific record \n 0. Exit Application")
-    picker = input("Enter a function number: ")
+    print("1. Display all records \n" 
+    "2. Sort record by Customer Name using Bubble sort \n"
+    "3. Sort record by Package Name using Selection sort\n" 
+    "4. Sort record by Package Cost using Insertion sort \n" 
+    "5. Search record by Customer Name using Linear Search and update record \n" 
+    "6. Search record by Package Name using Binary Search and update record \n" 
+    "7. List records range from $X to $Y. e.g $100-200 \n" 
+    "8. Sort record by Customer Name using Heapsort \n" 
+    "9. Sort record by Package Cost using Bucket sort \n" 
+    "10. Sort record by Pax using Counting sort \n" 
+    "11. Sort record by Package Cost using Radix sort \n" 
+    "12. Sort record by Customer Name using Shell sort \n" 
+    "13. Add new record \n" 
+    "14. Delete a specific record \n" 
+    "dumb. Sort record by Customer Name using Bogo sort \n"
+    "0. Exit Application")
+    picker = input("Enter a function number: ").lower()
     if picker == "1":
         display()
     elif picker == "2":
@@ -288,7 +359,7 @@ while switch:
         bucketSort(packageList)
         display()
     elif picker == "10":
-        countingSort(packageList)
+        countSort(packageList)
         display()
     elif picker == "11":
         radixSort(packageList)
@@ -356,8 +427,15 @@ while switch:
                     break
                 else:
                     print("Invalid input, please try again. Y/N?")
+    elif picker == "dumb":
+        bogoSort(packageList)
+        display()
     elif picker == "0":
         print("Goodbye.")
         switch = False
     else:
         print("Invalid input, please enter a valid function number.")
+
+
+#Console Function ends here
+###############################################################################################################################
