@@ -6,7 +6,6 @@ import random
 switch = True
 switch2 = True
 
-
 #################################################################################################################################
 #Data starts here
 
@@ -27,13 +26,30 @@ packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cos
 #################################################################################################################################
 #Function for algo starts here
 
+def display():
+    cycle = 0
+    print("="*90)
+    print(f"{'Index':^5} | {'Customer Name':<20} | {'Package Name':<20} | {'Pax':^8} | {'Package Cost':>8}")
+    print("="*90)
+    for package in packageList:
+        cycle = cycle + 1
+        print(f"{cycle:^5} | {package['Customer Name']:<20} | {package['Package Name']:<20} | {package['Pax']:^8} | {package['Cost']:>8}")
+    print("="*90)
 
 def updateDisplay(results):
-    print("=========================================================")
-    print("Customer Name  Package Name   Pax   Package Cost per Pax")
-    print("=========================================================")
-    print(*packageList[results].values(), sep="      ")
-    print("=========================================================")
+    cycle = 0
+    print("="*90)
+    print(f"{'Index':^5}  | {'Customer Name':<20} | {'Package Name':<20} | {'Pax':^8} | {'Package Cost':>8}")
+    print("="*90)
+    if duplicate:
+        print(f"{cycle:^5}  | {results['Customer Name']:<20} | {results['Package Name']:<20} | {results['Pax']:^8} | {results['Cost']:>8}")
+        print("="*90)
+    else:
+        for package in results:
+            cycle = cycle + 1
+            print(f":{cycle:^5}  | {package['Customer Name']:<20} | {package['Package Name']:<20} | {package['Pax']:^8} | {package['Cost']:>8}")
+        print("="*90)
+        
     while True:
         update = input("Do you want to update the record? (Y/N): ").lower()
         if update == "y":
@@ -84,14 +100,6 @@ def updateDisplay(results):
             break
         else:
             print("Invalid input, please try again. Y/N?")
-
-def display():
-    print("=========================================================")
-    print("Customer Name  Package Name   Pax   Package Cost per Pax")
-    print("=========================================================")
-    for package in packageList:
-        print(*package.values(), sep="      ")
-    print("=========================================================")
 
 def selectionSort(packageList):
     for i in range(len(packageList)):
@@ -144,11 +152,14 @@ def bubbleSort(packageList):
                 packageList[j], packageList[j+1] = packageList[j+1], packageList[j]
 
 def linearSearch(packageList, n, x):
- 
+    records = []
     for i in range(0, n):
         if (packageList[i]["Customer Name"] == x):
-            return i
-    return -1
+            records.append(i)
+    if len(records) == 0:
+        return -1
+    else:
+        return records
 
 def binarySearch(packageList, x):
     selectionSort(packageList)
@@ -285,6 +296,7 @@ def shuffle(packageList):
 
 
 while switch:
+    duplicate = False
     print("1. Display all records \n" 
     "2. Sort record by Customer Name using Bubble sort \n"
     "3. Sort record by Package Name using Selection sort\n" 
