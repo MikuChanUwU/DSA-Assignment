@@ -12,10 +12,10 @@ switch2 = True
 
 packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cost": 800},
             {"Customer Name": "noah","Package Name": "desktop", "Pax":70, "Cost": 900},
-            {"Customer Name": "oliver","Package Name": "telephone", "Pax":80, "Cost": 1000},
+            {"Customer Name": "liam","Package Name": "telephone", "Pax":80, "Cost": 1000},
             {"Customer Name": "elijah","Package Name": "playstation five", "Pax":90, "Cost": 100},
             {"Customer Name": "william","Package Name": "drum", "Pax":100, "Cost": 200},
-            {"Customer Name": "james","Package Name": "microphone", "Pax":10, "Cost": 300},
+            {"Customer Name": "james","Package Name": "drum", "Pax":10, "Cost": 300},
             {"Customer Name": "benjamin","Package Name": "phone", "Pax":20, "Cost": 400},
             {"Customer Name": "lucas","Package Name": "laptop", "Pax":30, "Cost": 500},
             {"Customer Name": "henry","Package Name": "television", "Pax":40, "Cost": 600},
@@ -41,44 +41,41 @@ def updateDisplay(results):
     print("="*90)
     print(f"{'Index':^5}  | {'Customer Name':<20} | {'Package Name':<20} | {'Pax':^8} | {'Package Cost':>8}")
     print("="*90)
-    if duplicate:
-        print(f"{cycle:^5}  | {results['Customer Name']:<20} | {results['Package Name']:<20} | {results['Pax']:^8} | {results['Cost']:>8}")
+    if len(results) == 1:
+        print(f"{cycle:^5}  | {results[0]['Customer Name']:<20} | {results[0]['Package Name']:<20} | {results[0]['Pax']:^8} | {results[0]['Cost']:>8}")
         print("="*90)
     else:
         for package in results:
             cycle = cycle + 1
-            print(f":{cycle:^5}  | {package['Customer Name']:<20} | {package['Package Name']:<20} | {package['Pax']:^8} | {package['Cost']:>8}")
+            print(f"{cycle:^5}  | {package['Customer Name']:<20} | {package['Package Name']:<20} | {package['Pax']:^8} | {package['Cost']:>8}")
         print("="*90)
-        
+        while True:
+            select = int(input("Select the index of the package you want to update: "))
+            if select > len(results):
+                print("Invalid index")
+            else:
+                break
     while True:
         update = input("Do you want to update the record? (Y/N): ").lower()
         if update == "y":
             while True:
                 newCustomerName = input("Enter Customer Name: ").lower()
-                custExist = False
-                for i in range(len(packageList)):
-                    if packageList[i]["Customer Name"] == newCustomerName:
-                        custExist = True
-                        print("Customer Name already exists")
-                        break
-                if custExist == False:
-                    packageList[results]["Customer Name"] = newCustomerName
+                if newCustomerName == "":
+                    print("Invalid Customer Name")
+                else:
+                    packageList[select]["Customer Name"] = newCustomerName
                     break
             while True:    
                 newPackageName = input("Enter Package Name: ").lower()
-                packExist = False
-                for i in range(len(packageList)):
-                    if packageList[i]["Package Name"] == newPackageName:
-                        packExist = True
-                        print("Package Name already exists")
-                        break
-                if packExist == False:
-                    packageList[results]["Package Name"] = newPackageName
+                if newPackageName == "":
+                    print("Invalid Package Name")
+                else:
+                    packageList[select]["Package Name"] = newPackageName
                     break
             while True:
                 try:
-                    packageList[results]["Pax"] = int(input("Enter Pax: "))
-                    if packageList[results]["Pax"] <= 0:
+                    packageList[select]["Pax"] = int(input("Enter Pax: "))
+                    if packageList[select]["Pax"] <= 0:
                         print("Pax must be greater than 0")
                     else:
                         break
@@ -86,8 +83,8 @@ def updateDisplay(results):
                     print("Please enter a number & no decimals")
             while True:
                 try:
-                    packageList[results]["Cost"] = int(input("Enter Cost: "))
-                    if packageList[results]["Cost"] <= 0:
+                    packageList[select]["Cost"] = int(input("Enter Cost: "))
+                    if packageList[select]["Cost"] <= 0:
                         print("Cost must be greater than 0")
                     else:
                         break
@@ -155,7 +152,7 @@ def linearSearch(packageList, n, x):
     records = []
     for i in range(0, n):
         if (packageList[i]["Customer Name"] == x):
-            records.append(i)
+            records.append(packageList[i])
     if len(records) == 0:
         return -1
     else:
@@ -163,13 +160,22 @@ def linearSearch(packageList, n, x):
 
 def binarySearch(packageList, x):
     selectionSort(packageList)
+    results = []
     low = 0
     high = len(packageList)-1
     while low <= high:
         mid = (low + high) // 2
-        print(low , mid , high)
         if packageList[mid]["Package Name"] == x:
-            return mid
+            results.append(packageList[mid])
+            left = mid - 1
+            while left >= 0 and packageList[left]["Package Name"] == x:
+                results.append(packageList[left])
+                left -= 1
+            right = mid + 1
+            while right <= len(packageList)-1 and packageList[right]["Package Name"] == x:
+                results.append(packageList[right])
+                right += 1
+            return results
         elif packageList[mid]["Package Name"] < x:
             low = mid + 1
         else:
@@ -296,7 +302,6 @@ def shuffle(packageList):
 
 
 while switch:
-    duplicate = False
     print("1. Display all records \n" 
     "2. Sort record by Customer Name using Bubble sort \n"
     "3. Sort record by Package Name using Selection sort\n" 
@@ -382,23 +387,15 @@ while switch:
     elif picker == "13":
         while True:
             newCustomerName = input("Enter New Customer Name: ").lower()
-            custExist = False
-            for i in range(len(packageList)):
-                if newCustomerName == packageList[i]["Customer Name"]:
-                    print("Customer Name already exists")
-                    custExist = True
-                    break
-            if custExist == False: 
+            if newCustomerName == "":
+                print("Customer Name cannot be empty")
+            else:
                 break
         while True:
             newPackageName = input("Enter New Package Name: ").lower()
-            packExist = False
-            for i in range(len(packageList)):
-                if newPackageName == packageList[i]["Package Name"]:
-                    print("Package Name already exists")
-                    packExist = True
-                    break
-            if packExist == False:
+            if newPackageName == "":
+                print("Package Name cannot be empty")
+            else:
                 break
         while True:
             try:
