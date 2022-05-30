@@ -2,6 +2,7 @@
 #214242Q
 #SF1202
 import random
+from struct import pack
 
 switch = True
 switch2 = True
@@ -50,11 +51,14 @@ def updateDisplay(results):
             print(f"{cycle:^5}  | {package['Customer Name']:<20} | {package['Package Name']:<20} | {package['Pax']:^8} | {package['Cost']:>8}")
         print("="*90)
         while True:
-            select = int(input("Select the index of the package you want to update: "))
-            if select > len(results):
-                print("Invalid index")
-            else:
-                break
+            try:
+                select = int(input("Select the index of the package you want to update: "))
+                if select > len(results) or select <= 0:
+                    print("Invalid index")
+                else:
+                    break
+            except ValueError:
+                print("Please enter a valid index.")
     while True:
         update = input("Do you want to update the record? (Y/N): ").lower()
         if update == "y":
@@ -115,31 +119,32 @@ def insertionSort(packageList):
                 j -= 1
         packageList[j + 1]["Cost"] = key
 
-def bucketSort(packageList):
-    bucket = []
+def flip(packageList, i):
+    start = 0
+    while start < i:
+        temp = packageList[start]
+        packageList[start] = packageList[i]
+        packageList[i] = temp
+        start += 1
+        i -= 1
+ 
+def findMax(packageList, n):
+    mi = 0
+    for i in range(0,n):
+        if packageList[i]["Cost"] > packageList[mi]["Cost"]:
+            mi = i
+    return mi
+ 
+def pancakeSort(packageList, n):
+    curr_size = n
+    while curr_size > 1:
+        mi = findMax(packageList, curr_size)
+        if mi != curr_size-1:
+            flip(packageList, mi)
+            flip(packageList, curr_size-1)
+        curr_size -= 1
 
-    # Create empty buckets
-    for i in range(len(packageList)):
-        bucket.append([])
 
-    # Insert elements into their respective buckets
-    for j in packageList:
-        index_b = int(10 * j["Cost"])
-        print(index_b)
-        print(bucket)
-        bucket[index_b].append(j)
-
-    # Sort the elements of each bucket
-    for i in range(len(packageList)):
-        bucket[i] = sorted(bucket[i])
-
-    # Get the sorted elements
-    k = 0
-    for i in range(len(packageList)):
-        for j in range(len(bucket[i])):
-            packageList[k] = bucket[i][j]
-            k += 1
-    return packageList
 
 def bubbleSort(packageList):
     n = len(packageList)
@@ -216,37 +221,26 @@ def heapSort(packageList):
         packageList[i], packageList[0] = packageList[0], packageList[i]  # swap
         heapify(packageList, i, 0)
 
-def countSort(packageList):
-    # The output character array that will have sorted arr
-    output = [0 for i in range(len(packageList))]
- 
-    # Create a count array to store count of individual
-    # characters and initialize count array as 0
-    count = [0 for i in range(256)]
- 
-    # For storing the resulting answer since the
-    # string is immutable
-    ans = ["" for _ in packageList]
- 
-    # Store count of each character
-    for i in packageList:
-        count[ord(i)] += 1
- 
-    # Change count[i] so that count[i] now contains actual
-    # position of this character in output array
-    for i in range(256):
-        count[i] += count[i-1]
- 
-    # Build the output character array
-    for i in range(len(packageList)):
-        output[count[ord(packageList[i])]-1] = packageList[i]
-        count[ord(packageList[i])] -= 1
- 
-    # Copy the output array to arr, so that arr now
-    # contains sorted characters
-    for i in range(len(packageList)):
-        ans[i] = output[i]
-    return ans
+def cocktailSort(packageList):
+    n = len(packageList)
+    swapped = True
+    start = 0
+    end = n-1
+    while swapped == True:
+        swapped = False
+        for i in range(start, end):
+            if (packageList[i]["Package Name"] > packageList[i + 1]["Package Name"]):
+                packageList[i], packageList[i + 1] = packageList[i + 1], packageList[i]
+                swapped = True
+        if swapped == False:
+            break
+        swapped = False
+        end = end-1
+        for i in range(end-1, start-1, -1):
+            if (packageList[i]["Package Name"] > packageList[i + 1]["Package Name"]):
+                packageList[i], packageList[i + 1] = packageList[i + 1], packageList[i]
+                swapped = True
+        start = start + 1
 
 def radixSort(packageList):
     bucket = [[] for i in range(10)]
@@ -310,8 +304,8 @@ while switch:
     "6. Search record by Package Name using Binary Search and update record \n" 
     "7. List records range from $X to $Y. e.g $100-200 \n" 
     "8. Sort record by Customer Name using Heapsort \n" 
-    "9. Sort record by Package Cost using Bucket sort \n" 
-    "10. Sort record by Pax using Counting sort \n" 
+    "9. Sort record by Package Cost using Pancake sort \n" 
+    "10. Sort record by Package Name using Cocktail sort \n" 
     "11. Sort record by Package Cost using Radix sort \n" 
     "12. Sort record by Customer Name using Shell sort \n" 
     "13. Add new record \n" 
@@ -373,10 +367,10 @@ while switch:
         heapSort(packageList)
         display()
     elif picker == "9":
-        bucketSort(packageList)
+        pancakeSort(packageList, len(packageList))
         display()
     elif picker == "10":
-        countSort(packageList)
+        cocktailSort(packageList)
         display()
     elif picker == "11":
         radixSort(packageList)
