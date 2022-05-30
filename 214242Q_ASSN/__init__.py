@@ -2,7 +2,6 @@
 #214242Q
 #SF1202
 import random
-from struct import pack
 
 switch = True
 switch2 = True
