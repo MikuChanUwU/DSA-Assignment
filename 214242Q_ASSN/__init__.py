@@ -241,19 +241,53 @@ def cocktailSort(packageList):
                 swapped = True
         start = start + 1
 
+def countingSort(packageList, exp1):
+  
+    n = len(packageList)
+  
+    # The output array elements that will have sorted arr
+    output = [0] * (n)
+  
+    # initialize count array as 0
+    count = [0] * (10)
+  
+    # Store count of occurrences in count[]
+    for i in range(0, n):
+        index = packageList[i]["Cost"] // exp1
+        count[index % 10] += 1
+  
+    # Change count[i] so that count[i] now contains actual
+    # position of this digit in output array
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+  
+    # Build the output array
+    i = n - 1
+    while i >= 0:
+        index = packageList[i]["Cost"] // exp1
+        output[count[index % 10] - 1] = packageList[i]
+        count[index % 10] -= 1
+        i -= 1
+  
+    # Copying the output array to arr[],
+    # so that arr now contains sorted numbers
+    i = 0
+    for i in range(0, len(packageList)):
+        packageList[i] = output[i]
+  
+# Method to do Radix Sort
 def radixSort(packageList):
-    bucket = [[] for i in range(10)]
-    maxLength = 0
-    for i in packageList:
-        if len(str(i["Cost"])) > maxLength:
-            maxLength = len(str(i["Cost"]))
-    for i in range(maxLength):
-        for j in packageList:
-            bucket[int(j["Cost"]/(10**i)) % 10].append(j)
-        packageList = []
-        for z in bucket:
-            packageList.extend(z)
-    return packageList
+  
+    # Find the maximum number to know number of digits
+    max1 = max(packageList, key=lambda x: x["Cost"])["Cost"]
+  
+    # Do counting sort for every digit. Note that instead
+    # of passing digit number, exp is passed. exp is 10^i
+    # where i is current digit number
+    exp = 1
+    while max1 // exp > 0:
+        countingSort(packageList, exp)
+        exp *= 10
 
 def shellSort(packageList):
     n = len(packageList)
