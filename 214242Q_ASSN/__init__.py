@@ -285,7 +285,7 @@ def radixSort(packageList):
     # of passing digit number, exp is passed. exp is 10^i
     # where i is current digit number
     exp = 1
-    while max1 // exp > 0:
+    while max1 / exp > 0:
         countingSort(packageList, exp)
         exp *= 10
 
