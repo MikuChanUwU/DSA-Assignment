@@ -386,8 +386,9 @@ while switch:
                     break
             except ValueError:
                 print("Please enter a number & no decimals")
-        print("Customer Name  Package Name   Pax   Package Cost per Pax")
-        print("=========================================================")
+        print("="*90)
+        print(f"{'Index':^5} | {'Customer Name':<20} | {'Package Name':<20} | {'Pax':^8} | {'Package Cost':>8}")
+        print("="*90)
         for i in range(len(packageList)):
             if packageList[i]["Cost"] >= range1 and packageList[i]["Cost"] <= range2:
                 print(*packageList[i].values(), sep="      ")
