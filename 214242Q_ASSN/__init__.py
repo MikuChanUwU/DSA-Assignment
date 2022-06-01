@@ -10,16 +10,16 @@ switch2 = True
 #Data starts here
 
 
-packageList =[{"Index":"1","Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cost": 800},
-            {"Index":"2","Customer Name": "noah","Package Name": "desktop", "Pax":70, "Cost": 900},
-            {"Index":"3","Customer Name": "liam","Package Name": "telephone", "Pax":80, "Cost": 1000},
-            {"Index":"4","Customer Name": "elijah","Package Name": "playstation five", "Pax":90, "Cost": 100},
-            {"Index":"5","Customer Name": "william","Package Name": "drum", "Pax":100, "Cost": 200},
-            {"Index":"6","Customer Name": "james","Package Name": "drum", "Pax":10, "Cost": 300},
-            {"Index":"7","Customer Name": "benjamin","Package Name": "phone", "Pax":20, "Cost": 400},
-            {"Index":"8","Customer Name": "lucas","Package Name": "laptop", "Pax":30, "Cost": 500},
-            {"Index":"9","Customer Name": "henry","Package Name": "television", "Pax":40, "Cost": 600},
-            {"Index":"10","Customer Name": "alexander","Package Name": "speaker", "Pax":50, "Cost": 700}]
+packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cost": 800},
+            {"Customer Name": "noah","Package Name": "desktop", "Pax":70, "Cost": 900},
+            {"Customer Name": "liam","Package Name": "telephone", "Pax":80, "Cost": 1000},
+            {"Customer Name": "elijah","Package Name": "playstation five", "Pax":90, "Cost": 100},
+            {"Customer Name": "william","Package Name": "drum", "Pax":100, "Cost": 200},
+            {"Customer Name": "james","Package Name": "drum", "Pax":10, "Cost": 300},
+            {"Customer Name": "benjamin","Package Name": "phone", "Pax":20, "Cost": 400},
+            {"Customer Name": "lucas","Package Name": "laptop", "Pax":30, "Cost": 500},
+            {"Customer Name": "henry","Package Name": "television", "Pax":40, "Cost": 600},
+            {"Customer Name": "alexander","Package Name": "speaker", "Pax":50, "Cost": 700}]
 
 
 #Data ends here
@@ -55,6 +55,7 @@ def updateDisplay(results):
                 if select > len(results) or select <= 0:
                     print("Invalid index")
                 else:
+                    selectedRecord = results[select-1]
                     break
             except ValueError:
                 print("Please enter a valid index.")
@@ -66,19 +67,19 @@ def updateDisplay(results):
                 if newCustomerName == "":
                     print("Invalid Customer Name")
                 else:
-                    packageList[select]["Customer Name"] = newCustomerName
+                    selectedRecord['Customer Name'] = newCustomerName
                     break
             while True:    
                 newPackageName = input("Enter Package Name: ").lower()
                 if newPackageName == "":
                     print("Invalid Package Name")
                 else:
-                    packageList[select]["Package Name"] = newPackageName
+                    selectedRecord['Package Name'] = newPackageName
                     break
             while True:
                 try:
-                    packageList[select]["Pax"] = int(input("Enter Pax: "))
-                    if packageList[select]["Pax"] <= 0:
+                    selectedRecord["Pax"] = int(input("Enter Pax: "))
+                    if selectedRecord["Pax"] <= 0:
                         print("Pax must be greater than 0")
                     else:
                         break
@@ -86,8 +87,8 @@ def updateDisplay(results):
                     print("Please enter a number & no decimals")
             while True:
                 try:
-                    packageList[select]["Cost"] = int(input("Enter Cost: "))
-                    if packageList[select]["Cost"] <= 0:
+                    selectedRecord["Cost"] = int(input("Enter Cost: "))
+                    if selectedRecord["Cost"] <= 0:
                         print("Cost must be greater than 0")
                     else:
                         break
