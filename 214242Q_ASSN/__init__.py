@@ -143,8 +143,6 @@ def pancakeSort(packageList, n):
             flip(packageList, curr_size-1)
         curr_size -= 1
 
-
-
 def bubbleSort(packageList):
     n = len(packageList)
     for i in range(n):
@@ -326,8 +324,10 @@ def shuffle(packageList):
 #Function for algo ends here
 ########################################################################################################################################
 #Console Function starts here
-
-
+print("="*42)
+print("| Welcome to the Hotel Management System |")
+print("="*42)
+print("\n")
 while switch:
     print("1. Display all records \n" 
     "2. Sort record by Customer Name using Bubble sort \n"
@@ -336,14 +336,9 @@ while switch:
     "5. Search record by Customer Name using Linear Search and update record \n" 
     "6. Search record by Package Name using Binary Search and update record \n" 
     "7. List records range from $X to $Y. e.g $100-200 \n" 
-    "8. Sort record by Customer Name using Heapsort \n" 
-    "9. Sort record by Package Cost using Pancake sort \n" 
-    "10. Sort record by Package Name using Cocktail sort \n" 
-    "11. Sort record by Package Cost using Radix sort \n" 
-    "12. Sort record by Customer Name using Shell sort \n" 
-    "13. Add new record \n" 
-    "14. Delete a specific record \n" 
-    "dumb. Sort record by Customer Name using Bogo sort \n"
+    "8. More sorting algorithms (Advanced) \n"
+    "9. Add new record \n" 
+    "10. Delete a specific record \n" 
     "0. Exit Application")
     picker = input("Enter a function number: ").lower()
     if picker == "1":
@@ -397,21 +392,38 @@ while switch:
                 print(*packageList[i].values(), sep="      ")
         print("=========================================================")
     elif picker == "8":
-        heapSort(packageList)
-        display()
+        while True:
+            print("1. Sort record by Customer Name using Heapsort \n" 
+                  "2. Sort record by Package Cost using Pancake sort \n" 
+                  "3. Sort record by Package Name using Cocktail sort \n" 
+                  "4. Sort record by Package Cost using Radix sort \n" 
+                  "5. Sort record by Customer Name using Shell sort \n"
+                  "dumb. Sort record by Customer Name using Bogo sort \n"
+                  "0. Back to main menu")
+            picker2 = input("Enter a function number: ").lower()
+            if picker2 == "1":
+                heapSort(packageList)
+                display()
+            elif picker2 == "2":
+                pancakeSort(packageList)
+                display()
+            elif picker2 == "3":
+                cocktailSort(packageList)
+                display()
+            elif picker2 == "4":
+                radixSort(packageList)
+                display()
+            elif picker2 == "5":
+                shellSort(packageList)
+                display()
+            elif picker2 == "dumb":
+                bogoSort(packageList)
+                display()
+            elif picker2 == "0":
+                break
+            else:
+                ("Invalid input, please enter a valid function number.")
     elif picker == "9":
-        pancakeSort(packageList, len(packageList))
-        display()
-    elif picker == "10":
-        cocktailSort(packageList)
-        display()
-    elif picker == "11":
-        radixSort(packageList)
-        display()
-    elif picker == "12":
-        shellSort(packageList)
-        display()
-    elif picker == "13":
         while True:
             newCustomerName = input("Enter New Customer Name: ").lower()
             if newCustomerName == "":
@@ -444,7 +456,7 @@ while switch:
                 print("Please enter a number & no decimals")
         packageList.append({"Customer Name": newCustomerName, "Package Name": newPackageName, "Pax": newPax, "Cost": newCost})
         print("Record added")
-    elif picker == "14":
+    elif picker == "10":
         display()
         search = input("Enter Customer Name: ").lower()
         results = linearSearch(packageList, len(packageList), search)
@@ -463,15 +475,13 @@ while switch:
                     break
                 else:
                     print("Invalid input, please try again. Y/N?")
-    elif picker == "dumb":
-        bogoSort(packageList)
-        display()
     elif picker == "0":
         print("Goodbye.")
         switch = False
     else:
         print("Invalid input, please enter a valid function number.")
+        print("\n")
 
 
 #Console Function ends here
-###############################################################################################################################
+########################################################################################################################################
