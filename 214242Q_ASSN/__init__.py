@@ -369,29 +369,36 @@ while switch:
             updateDisplay(results)
     elif picker == "7":
         while True:
-            try:
-                range1 = int(input("Enter minimum cost: "))
-                if range1 <= 0:
-                    print("Number must be greater than 0")
-                else:
-                    break
-            except ValueError:
-                print("Please enter a number & no decimals")
-        while True:
-            try:
-                range2 = int(input("Enter maximum cost: "))
-                if range2 <= 0:
-                    print("Number must be greater than 0")
-                else:
-                    break
-            except ValueError:
-                print("Please enter a number & no decimals")
+            while True:
+                try:
+                    range1 = int(input("Enter minimum cost: "))
+                    if range1 <= 0:
+                        print("Number must be greater than 0")
+                    else:
+                        break
+                except ValueError:
+                    print("Please enter a number & no decimals")
+            while True:
+                try:
+                    range2 = int(input("Enter maximum cost: "))
+                    if range2 <= 0:
+                        print("Number must be greater than 0")
+                    else:
+                        break
+                except ValueError:
+                    print("Please enter a number & no decimals")
+            if range1 > range2:
+                print("Minimum cost must be less than maximum cost")
+            else:
+                break
         print("="*90)
         print(f"{'Index':^5} | {'Customer Name':<20} | {'Package Name':<20} | {'Pax':^8} | {'Package Cost':>8}")
         print("="*90)
+        cycle = 0
         for i in range(len(packageList)):
             if packageList[i]["Cost"] >= range1 and packageList[i]["Cost"] <= range2:
-                print(*packageList[i].values(), sep="      ")
+                cycle = cycle + 1
+                print(f"{cycle:^5}  | {packageList[i]['Customer Name']:<20} | {packageList[i]['Package Name']:<20} | {packageList[i]['Pax']:^8} | {packageList[i]['Cost']:>8}")
         print("=========================================================")
     elif picker == "8":
         while True:
@@ -407,7 +414,7 @@ while switch:
                 heapSort(packageList)
                 display()
             elif picker2 == "2":
-                pancakeSort(packageList)
+                pancakeSort(packageList, len(packageList))
                 display()
             elif picker2 == "3":
                 cocktailSort(packageList)
@@ -465,12 +472,34 @@ while switch:
         if results == -1:
             print("Customer Name not found")
         else:
+            if len(results) == 1:
+                print(f"{cycle:^5}  | {results[0]['Customer Name']:<20} | {results[0]['Package Name']:<20} | {results[0]['Pax']:^8} | {results[0]['Cost']:>8}")
+                print("="*90)
+            else:
+                cycle = 0
+                for package in results:
+                    cycle = cycle + 1
+                    print(f"{cycle:^5}  | {package['Customer Name']:<20} | {package['Package Name']:<20} | {package['Pax']:^8} | {package['Cost']:>8}")
+                print("="*90)
+                while True:
+                    try:
+                        select = int(input("Select the index of the record you want to remove: "))
+                        if select > len(results) or select <= 0:
+                            print("Invalid index")
+                        else:
+                            selectedRecord = results[select-1]
+                            break
+                    except ValueError:
+                        print("Please enter a valid index.")
             print("Are you sure? (Y/N)")
             while True:
                 delete = input("Enter your choice: ").lower()
                 if delete == "y":
-                    del packageList[results]
-                    print("Record deleted")
+                    for package in packageList:
+                        if package == selectedRecord:
+                            packageList.remove(package)
+                            print("Record removed")
+                            break
                     break
                 elif delete == "n":
                     print("Record not deleted")
