@@ -478,6 +478,7 @@ while switch:
                 cycle = 1
                 print(f"{cycle:^5}  | {results[0]['Customer Name']:<20} | {results[0]['Package Name']:<20} | {results[0]['Pax']:^8} | {results[0]['Cost']:>8}")
                 print("="*90)
+                selectedRecord = results[0]
             else:
                 cycle = 0
                 for package in results:
