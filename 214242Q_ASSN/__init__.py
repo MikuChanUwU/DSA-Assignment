@@ -42,8 +42,10 @@ def updateDisplay(results):
     print(f"{'Index':^5}  | {'Customer Name':<20} | {'Package Name':<20} | {'Pax':^8} | {'Package Cost':>8}")
     print("="*90)
     if len(results) == 1:
+        cycle = cycle + 1
         print(f"{cycle:^5}  | {results[0]['Customer Name']:<20} | {results[0]['Package Name']:<20} | {results[0]['Pax']:^8} | {results[0]['Cost']:>8}")
         print("="*90)
+        selectedRecord = results[0]
     else:
         for package in results:
             cycle = cycle + 1
@@ -473,6 +475,7 @@ while switch:
             print("Customer Name not found")
         else:
             if len(results) == 1:
+                cycle = 1
                 print(f"{cycle:^5}  | {results[0]['Customer Name']:<20} | {results[0]['Package Name']:<20} | {results[0]['Pax']:^8} | {results[0]['Cost']:>8}")
                 print("="*90)
             else:
