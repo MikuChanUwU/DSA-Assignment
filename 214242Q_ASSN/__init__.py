@@ -23,8 +23,10 @@ packageList =[{"Customer Name": "liam","Package Name": "bicycle", "Pax":60, "Cos
 
 
 #Data ends here
+
 #################################################################################################################################
-#Function for algo starts here
+
+#Function for Display Menu
 
 def display():
     cycle = 0
@@ -104,6 +106,12 @@ def updateDisplay(results):
         else:
             print("Invalid input, please try again. Y/N?")
 
+#End of Function for Display Menu
+
+#################################################################################################################################
+
+#Basic Sorting Algorithms
+
 def selectionSort(packageList):
     for i in range(len(packageList)):
         min_idx = i
@@ -120,31 +128,6 @@ def insertionSort(packageList):
                 packageList[j + 1]["Cost"] = packageList[j]["Cost"]
                 j -= 1
         packageList[j + 1]["Cost"] = key
-
-def flip(packageList, i):
-    start = 0
-    while start < i:
-        temp = packageList[start]
-        packageList[start] = packageList[i]
-        packageList[i] = temp
-        start += 1
-        i -= 1
- 
-def findMax(packageList, n):
-    mi = 0
-    for i in range(0,n):
-        if packageList[i]["Cost"] > packageList[mi]["Cost"]:
-            mi = i
-    return mi
- 
-def pancakeSort(packageList, n):
-    curr_size = n
-    while curr_size > 1:
-        mi = findMax(packageList, curr_size)
-        if mi != curr_size-1:
-            flip(packageList, mi)
-            flip(packageList, curr_size-1)
-        curr_size -= 1
 
 def bubbleSort(packageList):
     n = len(packageList)
@@ -187,6 +170,14 @@ def binarySearch(packageList, x):
             high = mid - 1
     return -1
 
+#End of Basic Sorting Algorithms
+
+#################################################################################################################################
+
+#Advanced Sorting Algorithms
+
+#https://www.geeksforgeeks.org/heap-sort/
+
 def heapify(packageList, n, i):
     largest = i  # Initialize largest as root
     l = 2 * i + 1     # left = 2*i + 1
@@ -221,6 +212,8 @@ def heapSort(packageList):
         packageList[i], packageList[0] = packageList[0], packageList[i]  # swap
         heapify(packageList, i, 0)
 
+#https://www.geeksforgeeks.org/cocktail-sort/
+
 def cocktailSort(packageList):
     n = len(packageList)
     swapped = True
@@ -241,6 +234,8 @@ def cocktailSort(packageList):
                 packageList[i], packageList[i + 1] = packageList[i + 1], packageList[i]
                 swapped = True
         start = start + 1
+
+#https://www.geeksforgeeks.org/counting-sort/
 
 def countingSort(packageList, exp1):
   
@@ -275,7 +270,9 @@ def countingSort(packageList, exp1):
     i = 0
     for i in range(0, len(packageList)):
         packageList[i] = output[i]
-  
+
+#https://www.geeksforgeeks.org/radix-sort/
+
 # Method to do Radix Sort
 def radixSort(packageList):
   
@@ -290,6 +287,35 @@ def radixSort(packageList):
         countingSort(packageList, exp)
         exp *= 10
 
+#https://www.geeksforgeeks.org/pancake-sorting/
+
+def flip(packageList, i):
+    start = 0
+    while start < i:
+        temp = packageList[start]
+        packageList[start] = packageList[i]
+        packageList[i] = temp
+        start += 1
+        i -= 1
+ 
+def findMax(packageList, n):
+    mi = 0
+    for i in range(0,n):
+        if packageList[i]["Cost"] > packageList[mi]["Cost"]:
+            mi = i
+    return mi
+ 
+def pancakeSort(packageList, n):
+    curr_size = n
+    while curr_size > 1:
+        mi = findMax(packageList, curr_size)
+        if mi != curr_size-1:
+            flip(packageList, mi)
+            flip(packageList, curr_size-1)
+        curr_size -= 1
+
+#https://www.geeksforgeeks.org/shellsort/
+
 def shellSort(packageList):
     n = len(packageList)
     gap = n//2
@@ -302,6 +328,8 @@ def shellSort(packageList):
                 j -= gap
             packageList[j] = temp
         gap //= 2
+
+#https://www.geeksforgeeks.org/bogosort-permutation-sort/
 
 def bogoSort(packageList):
     attempts = 0
@@ -324,9 +352,12 @@ def shuffle(packageList):
         packageList[i], packageList[j] = packageList[j], packageList[i]
         
 
-#Function for algo ends here
+#End of Advanced Sorting Algorithms
+
 ########################################################################################################################################
+
 #Console Function starts here
+
 print("="*42)
 print("| Welcome to the Hotel Management System |")
 print("="*42)
