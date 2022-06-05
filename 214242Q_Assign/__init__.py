@@ -551,3 +551,14 @@ while switch:
 
 #Console Function ends here
 ########################################################################################################################################
+
+"""References:
+
+    https://www.geeksforgeeks.org/heap-sort/
+    https://www.geeksforgeeks.org/pancake-sort/
+    https://www.geeksforgeeks.org/cocktail-sort/
+    https://www.geeksforgeeks.org/radix-sort/
+    https://www.geeksforgeeks.org/shellsort/
+    https://www.geeksforgeeks.org/bogosort/
+    
+"""
